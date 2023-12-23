@@ -92,7 +92,7 @@
                       >Wachtwoord</label
                     >
                     <input
-                      type="text"
+                      type="password"
                       id="wachtwoord"
                       class="form-control"
                       aria-label="wachtwoord"
@@ -106,7 +106,7 @@
                       >Wachtwoord</label
                     >
                     <input
-                      type="text"
+                      type="password"
                       id="wachtwoord"
                       class="form-control"
                       aria-label="wachtwoord"
@@ -195,9 +195,8 @@
                         Ik ga akkoord met de
                         <a href="#">algemene voorwaarden</a>.
                       </label>
-                    </div>
+                    </div><br>
                   </div>
-
                   <!--Betaling-->
                   <div class="col">
                     <h2>Betaling</h2>
@@ -206,7 +205,7 @@
                         class="form-check-input"
                         type="radio"
                         name="radioknopbankapp"
-                        id="bankapp"
+                        id="betalingswijze"
                       />
                       <label class="form-check-label" for="bankapp">
                         Banking app
@@ -217,7 +216,7 @@
                         class="form-check-input"
                         type="radio"
                         name="radioknopbankapp"
-                        id="overschrijving"
+                        id="betalingswijze"
                       />
                       <label class="form-check-label" for="overschrijving">
                         Overschrijving
@@ -239,7 +238,7 @@
                         class="form-check-input"
                         type="radio"
                         name="radioknopbankapp"
-                        id="paypal"
+                        id="betalingswijze"
                       />
                       <label class="form-check-label" for="paypal">
                         PayPal
@@ -248,7 +247,6 @@
                   </div>
                 </div>
               </div>
-            
             <!--rechterkant-->
             <!--rood-->
             <div class="col">
@@ -256,7 +254,6 @@
                 <h4>Yikes, errors...</h4>
                 <p>
                     <ul>
-
                     </ul>
                 </p>
               </div>
@@ -275,7 +272,7 @@
             <hr />
             <!--button-->
             <div class="col-12">
-              <button class="btn btn-primary btn-lg" id="registreren" type="button">
+              <button style="width: 100%;" class="btn btn-primary btn-lg" id="registreren" type="button">
                 Dien registratie in
               </button>
             </div>
@@ -283,6 +280,8 @@
         </div>
       </div>
     </div>
+
+
 
 <!--script-->
     <script>
@@ -303,6 +302,7 @@
         const errorElement = document.getElementById('errors');
         const successElement = document.getElementById('success');
         const infoElement = document.getElementById('info');
+        const payment = document.querySelectorAll('#betalingswijze')
 
         let errorsArray = []
 
@@ -328,16 +328,17 @@
             checkGebruikersnaam(gebruikersnaam)
             //email
             validateEmail(email)
-
             checkWachtwoorden(wachtwoord)
-            checkEmptyField(adres, "Adres is vereist.")
+            checkEmptyField(wachtwoord, "Het veld wachtwoord is vereist.")
             checkDropdown(land, "Land is vereist.")
             checkDropdown(provincie, "Provincie is vereist.")
             //postcode checken
-            checkPostcode(postcode)
+            checkpc(postcode)
 
-            
             checkVoorwaarden(voorwaarden, "Je moet de algemene voorwaarden accepteren.")
+
+            //controle betalingswijze
+            validatePayment(payment)
 
             if (errorsArray.length > 0){
                 let errorLijst = document.querySelector('#errors ul')
@@ -350,30 +351,10 @@
                 document.querySelector('#errors').classList.remove('d-none')             
             }else{
 
-          
+            // success
             document.querySelector('#success').classList.remove('d-none')
 
-            // bankapp
-            let bankapp = document.querySelector('#bankapp')
-            let overschrijving = document.querySelector('#overschrijving')
-            let visa = document.querySelector('#visa')
-            let paypal = document.querySelector('#paypal')
-
-            info.innerHTML = ''
-
-            
-                if (bankapp.checked){
-                  info.innerHTML = 'Je betalingswijze is bankingapp'
-                }
-                if (overschrijving.checked){
-                  info.innerHTML = 'Je betalingswijze is overschrijving'
-                }
-                if (visa.checked){
-                  info.innerHTML = 'Je betalingswijze is visa'
-                }
-                if (paypal.checked){
-                  info.innerHTML = 'Je betalingswijze is paypal'
-                }
+            // betalingswijze
             document.querySelector('#info').classList.remove('d-none')
 
             if (document.querySelector('#info').classList.contains('d-none')){
@@ -389,20 +370,24 @@
               }
           }
 
-          //email controleren
+          //email controleren https://www.w3schools.com/jsref/jsref_charat.asp
           function validateEmail(emailadres){
             if (emailadres.value == ""){
-              errorsArray.push("E-mailadres is niet correct.")
+              errorsArray.push("Het veld email is vereist")
             }else{
               //nummer of letter na @
               const indexOfTheAt = emailadres.value.indexOf("@")
-              const eersteLetter = emailadres.value.substring((indexOfTheAt + 1))
-              if (!isNumber(eersteLetter) || !isLetter(eersteLetter)){
-                errorsArray.push("E-mailadres moet starten met letter of nummer")
+              const teken = emailadres.value.charAt(indexOfTheAt + 1)
+              if (!isNumberOrLetter(teken)){
+                errorsArray.push("E-mail domein moet starten met een letter of nummer.")
               }
             }
-
           }
+        // sorry was letterlijk copypaste
+        // https://stackoverflow.com/questions/23282512/best-way-to-check-if-a-character-is-a-number-of-letter-in-javascript
+        function isNumberOrLetter(char) {
+        return /^[0-9a-zA-Z]+$/.test(char);
+        }
 
         function checkVoorwaarden(field, message){
             if (!field.checked){
@@ -430,18 +415,21 @@
 
         function checkWachtwoorden(field){
             if (field[0].value == ""){
-                    errorsArray.push("Wachtwoord is vereist.")
-                }else{
-                  if (field[0].value != field[1].value){
-                errorsArray.push("Je wachtwoorden komen niet overeen.")
+                    errorsArray.push("Het veld wachtwoord is vereist.")
                 }
-                if (field[0].value.length < 7){
-                    errorsArray.push("Een wachtwoord moet langer zijn dan 7 karakters.")
-                }
-                }
-                }
+            if (field[1].value == ""){
+              errorsArray.push("Het veld herhaal wachtwoord is vereist.")
+            } else{
+              if (field[0].value != field[1].value){
+            errorsArray.push("Je wachtwoorden komen niet overeen.")
+            }
+            if (field[0].value.length < 7){
+                errorsArray.push("Een wachtwoord moet langer zijn dan 7 karakters.")
+            }
+            }
+            }
         
-        function checkPostcode(field){
+        function checkpc(field){
             if (field.value == ""){
                 errorsArray.push("Het veld postcode is vereist.")
             }else{
@@ -449,9 +437,39 @@
                 errorsArray.push("De waarde van de postcode moet tussen 1000 en 9999 liggen.")
             }
             }
+        }
+
+
+        function validatePayment(veld){
+          info.innerHTML = ""
+          let atLeastOneChecked = false;
+
+            for (const checkbox of veld) {
+                if (checkbox.checked) {
+                atLeastOneChecked = true;
+                break; // vertrekt eerder als...
+              }
+            }
+
+            if (!atLeastOneChecked) {
+              errorsArray.push("Je moet een betalingswijze kiezen.")
+            } else {
+              if (veld[0].checked){
+                info.innerHTML = 'Je betalingswijze is Banking app'
+              } else if (veld[1].checked){
+                info.innerHTML = 'Je betalingswijze is Overschrijving'
+              } else if (veld[2].checked){
+                info.innerHTML = 'Je betalingswijze is Visa card'
+              } else if (veld[3].checked){
+                info.innerHTML = 'Je betalingswijze is PayPal'
+              }
+            }
+          }
 
         }
-      }
+
+
+
       
         //knop initialisatie
         registratieknop.addEventListener('click', validateForm);
