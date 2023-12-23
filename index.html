@@ -129,8 +129,8 @@
                     <label for="land" class="form-label">Land</label>
                     <select id="land" class="form-select">
                       <option selected>Kies een land</option>
-                      <option id="land" value="1">Belgie</option>
-                      <option id="land" value="2">Nederland</option>
+                      <option value="Belgie">Belgie</option>
+                      <option value="Nederland">Nederland</option>
                     </select>
                   </div>
                   <div class="col-md-4">
@@ -293,31 +293,52 @@
         const email = document.querySelector('#email')
         const wachtwoord = document.querySelectorAll('#wachtwoord')
         const adres = document.querySelector('#adres')
+        const land = document.querySelector('#land')
         const provincie = document.querySelector('#provincie')
         const postcode = document.querySelector('#postcode')
         const voorwaarden = document.querySelector('#algemenevoorwaarden')
-        const betaling = document.getElementsByName('radioknopbankapp');
-        const error = document.getElementById('#errors')
-        const success = document.getElementById('#success')
-        const info = document.getElementById('#info p')
+        const error = document.querySelector('#errors')
+        const success = document.querySelector('#success')
+        const info = document.querySelector('#info p')
+        const errorElement = document.getElementById('errors');
+        const successElement = document.getElementById('success');
+        const infoElement = document.getElementById('info');
 
         let errorsArray = []
-        let alertArray = []
 
-        function checkRegistratie(){
+        function validateForm(){
+            //checken of d-none aanwezig is.
+            if (!errorElement.classList.contains('d-none')) {
+                errorElement.classList.add('d-none');
+            }
+
+            if (!successElement.classList.contains('d-none')) {
+                successElement.classList.add('d-none');
+            }
+
+            if (!infoElement.classList.contains('d-none')) {
+                infoElement.classList.add('d-none');
+            }
+
+            //functies inlezen
             errorsArray = []
-            leegVeld(voornaam, "Het veld voornaam is vereist.")
-            leegVeld(achternaam, "Het veld achternaam is vereist.")
-            leegVeld(gebruikersnaam, "Het veld gebruikersnaam is vereist.")
-            leegVeld(email, "Het veld email is vereist.")
-            leegVeld(wachtwoord, "Het veld wachtwoord is vereist.")
-            leegVeld(wachtwoord, "Het veld herhaal wachtwoord is vereist.")
-            leegVeld(adres, "Adres is vereist.")
-            leegVeld(provincie, "Provincie is vereist.")
-            leegVeld(postcode, "Het veld postcode is vereist.")
-            checkWachtwoorden(wachtwoord, "Je wachtwoorden komen niet overeen.")
-            checkPostcode(parseInt(postcode.value), "De waarde van de postcode moet tussen 1000 en 9999 liggen.")
+            checkEmptyField(voornaam, "Het veld voornaam is vereist.")
+            checkEmptyField(achternaam, "Het veld achternaam is vereist.")
+            //gebruikersnaam
+            checkGebruikersnaam(gebruikersnaam)
+            //email
+            validateEmail(email)
+
+            checkWachtwoorden(wachtwoord)
+            checkEmptyField(adres, "Adres is vereist.")
+            checkDropdown(land, "Land is vereist.")
+            checkDropdown(provincie, "Provincie is vereist.")
+            //postcode checken
+            checkPostcode(postcode)
+
+            
             checkVoorwaarden(voorwaarden, "Je moet de algemene voorwaarden accepteren.")
+
             if (errorsArray.length > 0){
                 let errorLijst = document.querySelector('#errors ul')
                 errorLijst.innerHTML = ''
@@ -326,11 +347,10 @@
                     errorLijst.innerHTML += `<li>${error}</li>`
                 
                 })
-                document.querySelector('#errors').classList.remove('d-none')
-                return
+                document.querySelector('#errors').classList.remove('d-none')             
+            }else{
 
-                
-            }
+          
             document.querySelector('#success').classList.remove('d-none')
 
             // bankapp
@@ -356,36 +376,85 @@
                 }
             document.querySelector('#info').classList.remove('d-none')
 
-        }
-
-
-        function leegVeld(field, message){
-            if (field.value ==""){
-                errorsArray.push(message)
+            if (document.querySelector('#info').classList.contains('d-none')){
             }
-        }
+          }
+        
+
+          //functies
+          //leeg veld controleren
+          function checkEmptyField(field, message){
+              if (field.value == ""){
+                  errorsArray.push(message)
+              }
+          }
+
+          //email controleren
+          function validateEmail(emailadres){
+            if (emailadres.value == ""){
+              errorsArray.push("E-mailadres is niet correct.")
+            }else{
+              //nummer of letter na @
+              const indexOfTheAt = emailadres.value.indexOf("@")
+              const eersteLetter = emailadres.value.substring((indexOfTheAt + 1))
+              if (!isNumber(eersteLetter) || !isLetter(eersteLetter)){
+                errorsArray.push("E-mailadres moet starten met letter of nummer")
+              }
+            }
+
+          }
+
         function checkVoorwaarden(field, message){
             if (!field.checked){
                 errorsArray.push(message)
             }
         }
 
-        function checkWachtwoorden(field, message){
-            if (field[0].value != field[1].value){
+        function checkDropdown(field, message) {
+            if (field.value === "Kies een land" || field.value === "Kies een provincie") {
                 errorsArray.push(message)
+        }
+        }   
+
+        //gebruikersnaam
+        function checkGebruikersnaam(field){
+          if (field.value == ""){
+                errorsArray.push("Het veld gebruikersnaam is vereist.")
+            }else{
+              if (field.value.slice(0,1) === "." || field.value.slice(0,1) === "-" ){
+                errorsArray.push("gebruikersnaam mag geen punt of koppelteken als eerste karakter bevatten.")
+          }
             }
+
         }
 
-        function checkPostcode(field, message){
-            if (field.length < 1000 || field.length > 9999){
-                errorsArray.push(message)
-            }
-        }
-
+        function checkWachtwoorden(field){
+            if (field[0].value == ""){
+                    errorsArray.push("Wachtwoord is vereist.")
+                }else{
+                  if (field[0].value != field[1].value){
+                errorsArray.push("Je wachtwoorden komen niet overeen.")
+                }
+                if (field[0].value.length < 7){
+                    errorsArray.push("Een wachtwoord moet langer zijn dan 7 karakters.")
+                }
+                }
+                }
         
+        function checkPostcode(field){
+            if (field.value == ""){
+                errorsArray.push("Het veld postcode is vereist.")
+            }else{
+              if (field.value.length !== 4){
+                errorsArray.push("De waarde van de postcode moet tussen 1000 en 9999 liggen.")
+            }
+            }
 
+        }
+      }
+      
         //knop initialisatie
-        registratieknop.addEventListener('click', checkRegistratie);
+        registratieknop.addEventListener('click', validateForm);
     </script>
 
     <script
