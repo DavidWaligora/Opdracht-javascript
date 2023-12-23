@@ -359,6 +359,9 @@
 
             if (document.querySelector('#info').classList.contains('d-none')){
             }
+
+            //reset form
+            clearAll()
           }
         
 
@@ -467,8 +470,12 @@
           }
 
         }
-
-
+    
+        // clear alllllll https://stackoverflow.com/questions/6653556/jquery-javascript-function-to-clear-all-the-fields-of-a-form
+        function clearAll(){
+          var formulier = document.querySelector('form')
+          furmulier.reset();
+        }
 
       
         //knop initialisatie
