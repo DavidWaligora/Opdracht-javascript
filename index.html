@@ -20,7 +20,6 @@
     <!--titel-->
     <h1 style="text-align: center">PE David Waligora</h1>
     <br />
-
     <div class="container-fluid">
       <div class="card shadow">
         <div class="card-header">
@@ -124,9 +123,10 @@
                     placeholder="Uw adres en huisnummer"
                   />
                 </div>
+                <br>
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="land" class="form-label">Adres</label>
+                    <label for="land" class="form-label">Land</label>
                     <select id="land" class="form-select">
                       <option selected>Kies een land</option>
                       <option id="land" value="1">Belgie</option>
@@ -137,9 +137,29 @@
                     <label for="provincie" class="form-label">Provincie</label>
                     <select id="provincie" class="form-select">
                       <option selected>Kies een provincie</option>
-                      <option id="provincie" value="1">One</option>
-                      <option id="provincie" value="2">Two</option>
-                      <option id="provincie" value="3">Three</option>
+                      <!-- Belgische provincies -->
+                      <option value="Antwerpen">Antwerpen</option>
+                      <option value="Oost-Vlaanderen">Oost-Vlaanderen</option>
+                      <option value="Vlaams-Brabant">Vlaams-Brabant</option>
+                      <option value="Henegouwen">Henegouwen</option>
+                      <option value="Limburg">Limburg</option>
+                      <option value="Luik">Luik</option>
+                      <option value="Luxemburg">Luxemburg</option>
+                      <option value="Namen">Namen</option>
+                      <option value="Waals-Brabant">Waals-Brabant</option>
+                      <option value="West-Vlaanderen">West-Vlaanderen</option>
+                      <option value="Drenthe">Drenthe</option>
+                      <option value="Flevoland">Flevoland</option>
+                      <option value="Friesland">Friesland</option>
+                      <option value="Gelderland">Gelderland</option>
+                      <option value="Groningen">Groningen</option>
+                      <option value="Limburg">Limburg</option>
+                      <option value="Noord-Brabant">Noord-Brabant</option>
+                      <option value="Noord-Holland">Noord-Holland</option>
+                      <option value="Overijssel">Overijssel</option>
+                      <option value="Utrecht">Utrecht</option>
+                      <option value="Zeeland">Zeeland</option>
+                      <option value="Zuid-Holland">Zuid-Holland</option>
                     </select>
                   </div>
                   <div class="col-md-2">
@@ -177,6 +197,7 @@
                       </label>
                     </div>
                   </div>
+
                   <!--Betaling-->
                   <div class="col">
                     <h2>Betaling</h2>
@@ -185,9 +206,9 @@
                         class="form-check-input"
                         type="radio"
                         name="radioknopbankapp"
-                        id="bankingapp"
+                        id="bankapp"
                       />
-                      <label class="form-check-label" for="bankingapp">
+                      <label class="form-check-label" for="bankapp">
                         Banking app
                       </label>
                     </div>
@@ -231,19 +252,21 @@
             <!--rechterkant-->
             <!--rood-->
             <div class="col">
-              <div class="alert alert-danger" id="errors" role="alert">
+              <div class="alert alert-danger d-none" id="errors" role="alert">
                 <h4>Yikes, errors...</h4>
                 <p>
-                    <ul></ul>
+                    <ul>
+
+                    </ul>
                 </p>
               </div>
               <!--groen-->
-              <div class="alert alert-success" id="success" role="alert">
+              <div class="alert alert-success d-none" id="success" role="alert">
                 <h4>Goed gedaan!</h4>
                 <p>Sheesh... je werd geregistreerd.</p>
               </div>
               <!--blauw-->
-              <div class="alert alert-info" id="info" role="alert">
+              <div class="alert alert-info d-none" id="info" role="alert">
                 <h4>Betalingswijze</h4>
                 <p></p>
               </div>
@@ -274,12 +297,95 @@
         const postcode = document.querySelector('#postcode')
         const voorwaarden = document.querySelector('#algemenevoorwaarden')
         const betaling = document.getElementsByName('radioknopbankapp');
+        const error = document.getElementById('#errors')
+        const success = document.getElementById('#success')
+        const info = document.getElementById('#info p')
 
-        function clear
+        let errorsArray = []
+        let alertArray = []
 
+        function checkRegistratie(){
+            errorsArray = []
+            leegVeld(voornaam, "Het veld voornaam is vereist.")
+            leegVeld(achternaam, "Het veld achternaam is vereist.")
+            leegVeld(gebruikersnaam, "Het veld gebruikersnaam is vereist.")
+            leegVeld(email, "Het veld email is vereist.")
+            leegVeld(wachtwoord, "Het veld wachtwoord is vereist.")
+            leegVeld(wachtwoord, "Het veld herhaal wachtwoord is vereist.")
+            leegVeld(adres, "Adres is vereist.")
+            leegVeld(provincie, "Provincie is vereist.")
+            leegVeld(postcode, "Het veld postcode is vereist.")
+            checkWachtwoorden(wachtwoord, "Je wachtwoorden komen niet overeen.")
+            checkPostcode(parseInt(postcode.value), "De waarde van de postcode moet tussen 1000 en 9999 liggen.")
+            checkVoorwaarden(voorwaarden, "Je moet de algemene voorwaarden accepteren.")
+            if (errorsArray.length > 0){
+                let errorLijst = document.querySelector('#errors ul')
+                errorLijst.innerHTML = ''
+
+                errorsArray.forEach((error) => {
+                    errorLijst.innerHTML += `<li>${error}</li>`
+                
+                })
+                document.querySelector('#errors').classList.remove('d-none')
+                return
+
+                
+            }
+            document.querySelector('#success').classList.remove('d-none')
+
+            // bankapp
+            let bankapp = document.querySelector('#bankapp')
+            let overschrijving = document.querySelector('#overschrijving')
+            let visa = document.querySelector('#visa')
+            let paypal = document.querySelector('#paypal')
+
+            info.innerHTML = ''
+
+            
+                if (bankapp.checked){
+                  info.innerHTML = 'Je betalingswijze is bankingapp'
+                }
+                if (overschrijving.checked){
+                  info.innerHTML = 'Je betalingswijze is overschrijving'
+                }
+                if (visa.checked){
+                  info.innerHTML = 'Je betalingswijze is visa'
+                }
+                if (paypal.checked){
+                  info.innerHTML = 'Je betalingswijze is paypal'
+                }
+            document.querySelector('#info').classList.remove('d-none')
+
+        }
+
+
+        function leegVeld(field, message){
+            if (field.value ==""){
+                errorsArray.push(message)
+            }
+        }
+        function checkVoorwaarden(field, message){
+            if (!field.checked){
+                errorsArray.push(message)
+            }
+        }
+
+        function checkWachtwoorden(field, message){
+            if (field[0].value != field[1].value){
+                errorsArray.push(message)
+            }
+        }
+
+        function checkPostcode(field, message){
+            if (field.length < 1000 || field.length > 9999){
+                errorsArray.push(message)
+            }
+        }
+
+        
 
         //knop initialisatie
-        registratieknop.addEventlistner('click', checkRegistratie)
+        registratieknop.addEventListener('click', checkRegistratie);
     </script>
 
     <script
