@@ -1,35 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Opdracht Javascript David Waligora</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-  </head>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Opdracht Javascript David Waligora</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <style>
     body {
       margin: 50px;
     }
+
+    body.dark-mode {
+      background-color: #444c53;
+      color: #ffffff;
+    }
+
+    .form-control.dark-mode {
+      background-color: #666;
+      color: #fff;
+    }
+
+    #dark-mode-toggle.dark-mode {
+      background-color: #3e464e;
+      color: #ffffff;
+    }
+
+    /* Updated button style */
+    .btn-dark-mode {
+      background-color: #3e464e;
+      color: #ffffff;
+    }
+
+    .dark-text {
+        color: #3e464e; /* White text color in dark mode */
+    }
+
+    .card.dark-mode {
+        background-color: #3e464e; /* Darker background color for the card in dark mode */
+        color: #ffffff; /* White text color for the card in dark mode */
+    }
+
+    /* Updated button style */
+    .btn-dark-mode {
+        background-color: #3e464e; /* Gray color in dark mode */
+        color: #ffffff; /* White text color in dark mode */
+    }
+
+    /* Additional styles for dark mode */
+    body.dark-mode .btn-dark-mode {
+        background-color: #3e464e; /* Dark background color for the button in dark mode */
+    }
+    
+    body.dark-mode #wachtwoordhulp {
+        color: #fff;
+    }
   </style>
-  <body>
-    <!--titel-->
-    <h1 style="text-align: center">PE David Waligora</h1>
-    <br />
-    <div class="container-fluid">
-      <div class="card shadow">
-        <div class="card-header">
-          <p class="display-2">Registreer</p>
-          <p>Meld je aan bij Quantum Dynamics Solutions, Inc.</p>
-        </div>
-        <br />
-        <!--form start-->
-        <div class="card-body">
-          <form>
+</head>
+
+<body>
+  <!--titel-->
+  <h1 style="text-align: center">PE David Waligora</h1>
+  <br />
+  <div class="container-fluid">
+    <div class="card shadow">
+      <div class="card-header">
+        <p class="display-2">Registreer</p>
+        <p>Meld je aan bij Quantum Dynamics Solutions, Inc.</p>
+        <!-- Dark Mode Toggle Button -->
+        <button class="btn btn-secondary btn-sm" id="dark-mode-toggle">Toggle Dark Mode</button>
+      </div>
+      <br />
+      <!--form start-->
+      <div class="card-body">
+        <form>
             <div class="row">
               <div class="col-md-8">
                 <div class="row">
@@ -98,7 +143,7 @@
                       aria-label="wachtwoord"
                     />
                     <div id="wachtwoordhulp" class="form-text">
-                      Je wachtwoord moet minstens 8 tekens lang zijn
+                      Je wachtwoord moet minstens 8 tekens lang zijn.
                     </div>
                   </div>
                   <div class="col">
@@ -136,30 +181,10 @@
                   <div class="col-md-4">
                     <label for="provincie" class="form-label">Provincie</label>
                     <select id="provincie" class="form-select">
-                      <option selected>Kies een provincie</option>
+                    <option value="Kies een provincie">Kies een provincie</option>
+                      
                       <!-- Belgische provincies -->
-                      <option value="Antwerpen">Antwerpen</option>
-                      <option value="Oost-Vlaanderen">Oost-Vlaanderen</option>
-                      <option value="Vlaams-Brabant">Vlaams-Brabant</option>
-                      <option value="Henegouwen">Henegouwen</option>
-                      <option value="Limburg">Limburg</option>
-                      <option value="Luik">Luik</option>
-                      <option value="Luxemburg">Luxemburg</option>
-                      <option value="Namen">Namen</option>
-                      <option value="Waals-Brabant">Waals-Brabant</option>
-                      <option value="West-Vlaanderen">West-Vlaanderen</option>
-                      <option value="Drenthe">Drenthe</option>
-                      <option value="Flevoland">Flevoland</option>
-                      <option value="Friesland">Friesland</option>
-                      <option value="Gelderland">Gelderland</option>
-                      <option value="Groningen">Groningen</option>
-                      <option value="Limburg">Limburg</option>
-                      <option value="Noord-Brabant">Noord-Brabant</option>
-                      <option value="Noord-Holland">Noord-Holland</option>
-                      <option value="Overijssel">Overijssel</option>
-                      <option value="Utrecht">Utrecht</option>
-                      <option value="Zeeland">Zeeland</option>
-                      <option value="Zuid-Holland">Zuid-Holland</option>
+
                     </select>
                   </div>
                   <div class="col-md-2">
@@ -272,19 +297,47 @@
             <hr />
             <!--button-->
             <div class="col-12">
-              <button style="width: 100%;" class="btn btn-primary btn-lg" id="registreren" type="button">
-                Dien registratie in
-              </button>
+                <div class="col-12">
+                    <button style="width: 100%;" class="btn btn-primary btn-lg" id="registreren" type="button">
+                        Dien registratie in
+                    </button>
+                </div>
             </div>
           </form>
         </div>
       </div>
     </div>
 
+    <script>
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', () => {
+
+        body.classList.toggle('dark-mode');
+
+        // Toggle dark-text class for text elements
+        const textElements = document.querySelectorAll('.dark-text');
+        textElements.forEach(element => {
+            element.classList.toggle('dark-text');
+        });
+
+        // Toggle dark-mode class for the card
+        const card = document.querySelector('.card');
+        card.classList.toggle('dark-mode');
+
+        // Toggle btn-dark-mode class for the button
+        const registrerenButton = document.getElementById('registreren');
+        registrerenButton.classList.toggle('btn-dark-mode');
+    });
+    </script>
 
 
 <!--script-->
     <script>
+        const land = document.querySelector('#land')
+        land.addEventListener('change', provinciesAanpassen);
+
         const registratieknop = document.querySelector('#registreren')
         const voornaam = document.querySelector('#voornaam')
         const achternaam = document.querySelector('#naam')
@@ -292,165 +345,169 @@
         const email = document.querySelector('#email')
         const wachtwoord = document.querySelectorAll('#wachtwoord')
         const adres = document.querySelector('#adres')
-        const land = document.querySelector('#land')
         const provincie = document.querySelector('#provincie')
         const postcode = document.querySelector('#postcode')
         const voorwaarden = document.querySelector('#algemenevoorwaarden')
         const error = document.querySelector('#errors')
         const success = document.querySelector('#success')
         const info = document.querySelector('#info p')
-        const errorElement = document.getElementById('errors');
-        const successElement = document.getElementById('success');
-        const infoElement = document.getElementById('info');
+        const errorElement = document.getElementById('errors')
+        const successElement = document.getElementById('success')
+        const infoElement = document.getElementById('info')
         const payment = document.querySelectorAll('#betalingswijze')
+        const nieuwsbrief = document.querySelector('#nieuwsbrief')
 
         let errorsArray = []
 
         function validateForm(){
-            //checken of d-none aanwezig is.
-            if (!errorElement.classList.contains('d-none')) {
-                errorElement.classList.add('d-none');
-            }
+          //checken of d-none aanwezig is.
+          if (!errorElement.classList.contains('d-none')) {
+              errorElement.classList.add('d-none')
+          }
 
-            if (!successElement.classList.contains('d-none')) {
-                successElement.classList.add('d-none');
-            }
+          if (!successElement.classList.contains('d-none')) {
+              successElement.classList.add('d-none')
+          }
 
-            if (!infoElement.classList.contains('d-none')) {
-                infoElement.classList.add('d-none');
-            }
+          if (!infoElement.classList.contains('d-none')) {
+              infoElement.classList.add('d-none')
+          }
 
-            //functies inlezen
-            errorsArray = []
-            checkEmptyField(voornaam, "Het veld voornaam is vereist.")
-            checkEmptyField(achternaam, "Het veld achternaam is vereist.")
-            //gebruikersnaam
-            checkGebruikersnaam(gebruikersnaam)
-            //email
-            validateEmail(email)
-            checkWachtwoorden(wachtwoord)
-            checkEmptyField(wachtwoord, "Het veld wachtwoord is vereist.")
-            checkDropdown(land, "Land is vereist.")
-            checkDropdown(provincie, "Provincie is vereist.")
-            //postcode checken
-            checkpc(postcode)
+          //functies inlezen
+          errorsArray = []
+          checkEmptyField(voornaam, "Het veld voornaam is vereist.")
+          checkEmptyField(achternaam, "Het veld achternaam is vereist.")
+          //gebruikersnaam
+          checkGebruikersnaam(gebruikersnaam)
+          //email
+          validateEmail(email)
+          checkEmptyField(adres, "Het veld adres is vereist.")
+          checkWachtwoorden(wachtwoord)
+          checkEmptyField(wachtwoord, "Het veld wachtwoord is vereist.")
+          checkDropdown(land, "Land is vereist.")
+          checkDropdown(provincie, "Provincie is vereist.")
+          //postcode checken
+          checkpc(postcode)
 
-            checkVoorwaarden(voorwaarden, "Je moet de algemene voorwaarden accepteren.")
+          checkVoorwaarden(voorwaarden, "Je moet de algemene voorwaarden accepteren.")
 
-            //controle betalingswijze
-            validatePayment(payment)
+          //controle betalingswijze
+          validatePayment(payment)
 
-            if (errorsArray.length > 0){
-                let errorLijst = document.querySelector('#errors ul')
-                errorLijst.innerHTML = ''
+          if (errorsArray.length > 0){
+              let errorLijst = document.querySelector('#errors ul')
+              errorLijst.innerHTML = ''
 
-                errorsArray.forEach((error) => {
-                    errorLijst.innerHTML += `<li>${error}</li>`
-                
-                })
-                document.querySelector('#errors').classList.remove('d-none')             
-            }else{
-
+              errorsArray.forEach((error) => {
+                  errorLijst.innerHTML += `<li>${error}</li>`
+              })
+              document.querySelector('#errors').classList.remove('d-none')             
+          } else {
             // success
             document.querySelector('#success').classList.remove('d-none')
 
             // betalingswijze
             document.querySelector('#info').classList.remove('d-none')
 
-            if (document.querySelector('#info').classList.contains('d-none')){
-            }
-
             //reset form
             clearAll()
           }
-        
+      
 
           //functies
           //leeg veld controleren
           function checkEmptyField(field, message){
-              if (field.value == ""){
-                  errorsArray.push(message)
-              }
+            if (field.value == ""){
+                errorsArray.push(message)
+            }
           }
 
           //email controleren https://www.w3schools.com/jsref/jsref_charat.asp
           function validateEmail(emailadres){
-            if (emailadres.value == ""){
+            const emailString = emailadres.value
+
+            if (emailString === ""){
               errorsArray.push("Het veld email is vereist")
-            }else{
+            }else if (!emailString.includes("@")){
+                    errorsArray.push("Dit is geen geldig e-mailadres.")
+            } else {
               //nummer of letter na @
-              const indexOfTheAt = emailadres.value.indexOf("@")
-              const teken = emailadres.value.charAt(indexOfTheAt + 1)
-              if (!isNumberOrLetter(teken)){
+              const indexOfTheAt = emailString.indexOf("@")
+              const tekenNaAt = emailString.charAt(indexOfTheAt + 1)
+              const tekenVoorAt = emailString.charAt(indexOfTheAt - 1)
+
+              if (tekenVoorAt == ""){
+                errorsArray.push("Dit is geen geldig e-mailadres.")
+              }
+              if (!isNumberOrLetter(tekenNaAt)){
                 errorsArray.push("E-mail domein moet starten met een letter of nummer.")
               }
             }
           }
-        // sorry was letterlijk copypaste
-        // https://stackoverflow.com/questions/23282512/best-way-to-check-if-a-character-is-a-number-of-letter-in-javascript
-        function isNumberOrLetter(char) {
-        return /^[0-9a-zA-Z]+$/.test(char);
-        }
-
-        function checkVoorwaarden(field, message){
-            if (!field.checked){
-                errorsArray.push(message)
-            }
-        }
-
-        function checkDropdown(field, message) {
-            if (field.value === "Kies een land" || field.value === "Kies een provincie") {
-                errorsArray.push(message)
-        }
-        }   
-
-        //gebruikersnaam
-        function checkGebruikersnaam(field){
-          if (field.value == ""){
-                errorsArray.push("Het veld gebruikersnaam is vereist.")
-            }else{
-              if (field.value.slice(0,1) === "." || field.value.slice(0,1) === "-" ){
-                errorsArray.push("gebruikersnaam mag geen punt of koppelteken als eerste karakter bevatten.")
+          // sorry was letterlijk copypaste
+          // https://stackoverflow.com/questions/23282512/best-way-to-check-if-a-character-is-a-number-of-letter-in-javascript
+          function isNumberOrLetter(char) {
+          return /^[0-9a-zA-Z]+$/.test(char)
           }
+
+          function checkVoorwaarden(field, message){
+              if (!field.checked){
+                errorsArray.push(message)
             }
+          }
 
-        }
+          function checkDropdown(field, message) {
+          if (field.value === "Kies een land" || field.value === "Kies een provincie") {
+            errorsArray.push(message)
+            }
+          }   
 
-        function checkWachtwoorden(field){
+          //gebruikersnaam
+          function checkGebruikersnaam(field){
+            if (field.value == ""){
+                  errorsArray.push("Het veld gebruikersnaam is vereist.")
+              }else{
+                if (field.value.slice(0,1) === "." || field.value.slice(0,1) === "-" ){
+                  errorsArray.push("gebruikersnaam mag geen punt of koppelteken als eerste karakter bevatten.")
+              }
+            }
+          }
+
+          function checkWachtwoorden(field){
             if (field[0].value == ""){
-                    errorsArray.push("Het veld wachtwoord is vereist.")
-                }
+                errorsArray.push("Het veld wachtwoord is vereist.")
+            }
             if (field[1].value == ""){
-              errorsArray.push("Het veld herhaal wachtwoord is vereist.")
+            errorsArray.push("Het veld herhaal wachtwoord is vereist.")
             } else{
               if (field[0].value != field[1].value){
-            errorsArray.push("Je wachtwoorden komen niet overeen.")
-            }
-            if (field[0].value.length < 7){
+              errorsArray.push("Je wachtwoorden komen niet overeen.")
+              }
+              if (field[0].value.length < 7){
                 errorsArray.push("Een wachtwoord moet langer zijn dan 7 karakters.")
+              }
             }
-            }
-            }
+          }
         
-        function checkpc(field){
+          function checkpc(field){
             if (field.value == ""){
                 errorsArray.push("Het veld postcode is vereist.")
             }else{
-              if (field.value.length !== 4){
+                if (field.value.length !== 4){
                 errorsArray.push("De waarde van de postcode moet tussen 1000 en 9999 liggen.")
+              }
             }
-            }
-        }
+          }
 
 
-        function validatePayment(veld){
-          info.innerHTML = ""
-          let atLeastOneChecked = false;
+          function validatePayment(veld){
+            info.innerHTML = ""
+            let atLeastOneChecked = false
 
             for (const checkbox of veld) {
                 if (checkbox.checked) {
-                atLeastOneChecked = true;
-                break; // vertrekt eerder als...
+                atLeastOneChecked = true
+                break // vertrekt eerder als...
               }
             }
 
@@ -468,18 +525,66 @@
               }
             }
           }
-
         }
     
-        // clear alllllll https://stackoverflow.com/questions/6653556/jquery-javascript-function-to-clear-all-the-fields-of-a-form
+        // clear alllllll 
         function clearAll(){
-          var formulier = document.querySelector('form')
-          furmulier.reset();
+        voornaam.value = ''
+        achternaam.value = ''
+        gebruikersnaam.value = ''
+        email.value = ''
+        adres.value = ''
+        postcode.value = ''
+        
+        // beide wachtwoorden
+        wachtwoord[0].value = ''
+        wachtwoord[1].value = ''
+
+        // checkbox afzetten
+        nieuwsbrief.checked = false
+        voorwaarden.checked = false
+        
+        // defaults
+        land.value = ''
+        provincie.value = ''
+
+        //selected
+        payment[0].checked = false
+        payment[1].checked = false
+        payment[2].checked = false
+        payment[3].checked = false
         }
 
-      
-        //knop initialisatie
-        registratieknop.addEventListener('click', validateForm);
+
+        //extra omdat ik nog wat wilde testen
+        function provinciesAanpassen() {
+        const keuzeLand = land.value;
+        
+        const provinciesPerLand ={
+        Belgie: ["Antwerpen", "Oost-Vlaanderen", "Vlaams-Brabant", "Henegouwen", "Limburg", "Luik", "Luxemburg", "Namen", "Waals-Brabant", "West-Vlaanderen"],
+        Nederland: ["Drenthe", "Flevoland", "Friesland", "Gelderland", "Groningen", "Limburg", "Noord-Brabant", "Noord-Holland", "Overijssel", "Utrecht", "Zeeland", "Zuid-Holland"]
+        }
+
+        //verwijderen van alle opties
+        provincie.innerHTML = ''
+
+        // default opzetten
+        const defaultOptie = document.createElement('option')
+        defaultOptie.value = ""
+        defaultOptie.text = "Kies een provincie"
+        provincie.add(defaultOptie)
+
+        provinciesPerLand[keuzeLand].forEach((provincieNaam) => {
+        const optie = document.createElement('option')
+        optie.value = provincieNaam
+        optie.text = provincieNaam
+        provincie.add(optie)
+        })
+
+      }
+
+        //knop initialisatie ++ eventlistner
+        registratieknop.addEventListener('click', validateForm)
     </script>
 
     <script
