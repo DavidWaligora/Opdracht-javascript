@@ -307,8 +307,10 @@
         </div>
       </div>
     </div>
-
+    
     <script>
+      //dark mode
+
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         const body = document.body;
 
@@ -411,6 +413,8 @@
 
             //reset form
             clearAll()
+
+
           }
       
 
@@ -545,7 +549,8 @@
         voorwaarden.checked = false
         
         // defaults
-        land.value = ''
+        const landDropdown = document.querySelector('#land')
+        landDropdown.selectedIndex = 0
         provincie.value = ''
 
         //selected
@@ -580,7 +585,6 @@
         optie.text = provincieNaam
         provincie.add(optie)
         })
-
       }
 
         //knop initialisatie ++ eventlistner
